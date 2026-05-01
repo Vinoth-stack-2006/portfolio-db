@@ -64,6 +64,11 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
+import os
+
+os.environ.setdefault('DJANGO_SUPERUSER_USERNAME', 'admin')
+os.environ.setdefault('DJANGO_SUPERUSER_EMAIL', 'admin@gmail.com')
+os.environ.setdefault('DJANGO_SUPERUSER_PASSWORD', 'admin123')
 
 import os
 
