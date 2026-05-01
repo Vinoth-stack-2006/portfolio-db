@@ -1,0 +1,82 @@
+{% extends 'portfolio/dashboard_base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="breadcrumb"><a href="/">Home</a> → Dashboard</div>
+  <h1 class="page-title">Dashboard</h1>
+  <p class="page-subtitle">Manage your portfolio content</p>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card neon">
+    <div class="stat-label">Projects</div>
+    <div class="stat-value">{{ projects_count }}</div>
+  </div>
+  <div class="stat-card purple">
+    <div class="stat-label">Skills</div>
+    <div class="stat-value">{{ skills_count }}</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-label">Experience</div>
+    <div class="stat-value">{{ experience_count }}</div>
+  </div>
+  <div class="stat-card pink">
+    <div class="stat-label">Unread Messages</div>
+    <div class="stat-value">{{ messages_count }}</div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem">
+  <!-- Recent Messages -->
+  <div class="data-table-wrap">
+    <div class="table-header">
+      <span class="table-title">Recent Messages</span>
+      <a href="{% url 'message_list' %}" class="btn btn-ghost" style="font-size:.65rem;padding:.4rem .8rem">View All</a>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>From</th><th>Subject</th><th>Date</th></tr></thead>
+      <tbody>
+        {% for msg in recent_messages %}
+        <tr>
+          <td>{{ msg.name }}</td>
+          <td>{{ msg.subject|truncatechars:30 }}</td>
+          <td style="color:var(--muted);font-family:var(--font-mono);font-size:.75rem">{{ msg.sent_at|date:"d M" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3" style="color:var(--muted);text-align:center">No messages yet</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Recent Projects -->
+  <div class="data-table-wrap">
+    <div class="table-header">
+      <span class="table-title">Projects</span>
+      <a href="{% url 'project_add' %}" class="btn btn-neon" style="font-size:.65rem;padding:.4rem .8rem">+ Add</a>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Title</th><th>Status</th></tr></thead>
+      <tbody>
+        {% for p in recent_projects %}
+        <tr>
+          <td>{{ p.title }}</td>
+          <td><span class="badge badge-{{ p.status }}">{{ p.status }}</span></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2" style="color:var(--muted);text-align:center">No projects yet</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Quick Actions -->
+<div style="margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap">
+  <a href="{% url 'project_add' %}" class="btn btn-neon">+ Add Project</a>
+  <a href="{% url 'skill_add' %}" class="btn btn-ghost">+ Add Skill</a>
+  <a href="{% url 'experience_add' %}" class="btn btn-ghost">+ Add Experience</a>
+  <a href="{% url 'profile_edit' %}" class="btn btn-ghost">✏ Edit Profile</a>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'portfolio/dashboard_base.html' %}
+{% block title %}Edit Profile{% endblock %}
+{% block nav_profile %}active{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="breadcrumb"><a href="{% url 'dashboard' %}">Dashboard</a> → Profile</div>
+  <h1 class="page-title">Edit Profile</h1>
+  <p class="page-subtitle">This info appears on your portfolio homepage</p>
+</div>
+<div class="form-card">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-section-title">// Personal Information</div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Full Name</label>{{ form.name }}</div>
+      <div class="form-group"><label class="form-label">Professional Title</label>{{ form.title }}</div>
+      <div class="form-group full"><label class="form-label">Bio (appears in hero section)</label>{{ form.bio }}</div>
+      <div class="form-group"><label class="form-label">Email</label>{{ form.email }}</div>
+      <div class="form-group"><label class="form-label">Location</label>{{ form.location }}</div>
+      <div class="form-group"><label class="form-label">Years of Experience</label>{{ form.years_experience }}</div>
+      <div class="form-group"><label class="form-label">GitHub URL</label>{{ form.github }}</div>
+      <div class="form-group"><label class="form-label">LinkedIn URL</label>{{ form.linkedin }}</div>
+      <div class="form-group full"><label class="form-label">Resume (PDF)</label>{{ form.resume }}</div>
+    </div>
+    <div style="margin-top:2rem;display:flex;gap:1rem">
+      <button type="submit" class="btn btn-neon">Save Profile</button>
+      <a href="{% url 'dashboard' %}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

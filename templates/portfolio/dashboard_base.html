@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Dashboard{% endblock %} — Portfolio Admin</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    PORTFOLIO.ADMIN
+    <span>Logged in as {{ request.user.username }}</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <div class="nav-group-label">Overview</div>
+      <a href="{% url 'dashboard' %}" class="nav-item {% block nav_dashboard %}{% endblock %}">
+        <span class="nav-item-icon"><i class="fas fa-th-large"></i></span> Dashboard
+      </a>
+      <a href="/" class="nav-item" target="_blank">
+        <span class="nav-item-icon"><i class="fas fa-eye"></i></span> View Portfolio
+      </a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Content</div>
+      <a href="{% url 'project_list' %}" class="nav-item {% block nav_projects %}{% endblock %}">
+        <span class="nav-item-icon"><i class="fas fa-code"></i></span> Projects
+      </a>
+      <a href="{% url 'skill_list' %}" class="nav-item {% block nav_skills %}{% endblock %}">
+        <span class="nav-item-icon"><i class="fas fa-microchip"></i></span> Skills
+      </a>
+      <a href="{% url 'experience_list' %}" class="nav-item {% block nav_experience %}{% endblock %}">
+        <span class="nav-item-icon"><i class="fas fa-briefcase"></i></span> Experience
+      </a>
+      <a href="{% url 'profile_edit' %}" class="nav-item {% block nav_profile %}{% endblock %}">
+        <span class="nav-item-icon"><i class="fas fa-user"></i></span> Profile
+      </a>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Inbox</div>
+      <a href="{% url 'message_list' %}" class="nav-item {% block nav_messages %}{% endblock %}">
+        <span class="nav-item-icon"><i class="fas fa-envelope"></i></span> Messages
+        {% if unread_count %}<span class="nav-badge">{{ unread_count }}</span>{% endif %}
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="{% url 'admin_logout' %}" class="logout-btn">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+  </div>
+</aside>
+<main class="main-content">
+  {% if messages %}
+  {% for msg in messages %}
+  <div class="alert alert-success">✓ {{ msg }}</div>
+  {% endfor %}
+  {% endif %}
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>

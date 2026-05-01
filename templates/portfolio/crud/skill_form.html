@@ -1,0 +1,26 @@
+{% extends 'portfolio/dashboard_base.html' %}
+{% block title %}{{ action }} Skill{% endblock %}
+{% block nav_skills %}active{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="breadcrumb"><a href="{% url 'dashboard' %}">Dashboard</a> → <a href="{% url 'skill_list' %}">Skills</a> → {{ action }}</div>
+  <h1 class="page-title">{{ action }} Skill</h1>
+</div>
+<div class="form-card">
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-section-title">// Skill Details</div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Name</label>{{ form.name }}</div>
+      <div class="form-group"><label class="form-label">Category</label>{{ form.category }}</div>
+      <div class="form-group"><label class="form-label">Proficiency (0-100)</label>{{ form.proficiency }}</div>
+      <div class="form-group"><label class="form-label">Order</label>{{ form.order }}</div>
+      <div class="form-group full"><label class="form-label">Icon Class (devicon)</label>{{ form.icon }}</div>
+    </div>
+    <div style="margin-top:2rem;display:flex;gap:1rem">
+      <button type="submit" class="btn btn-neon">Save Skill</button>
+      <a href="{% url 'skill_list' %}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

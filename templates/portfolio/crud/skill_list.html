@@ -1,0 +1,40 @@
+{% extends 'portfolio/dashboard_base.html' %}
+{% block title %}Skills{% endblock %}
+{% block nav_skills %}active{% endblock %}
+{% block content %}
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start">
+  <div>
+    <div class="breadcrumb"><a href="{% url 'dashboard' %}">Dashboard</a> → Skills</div>
+    <h1 class="page-title">Skills</h1>
+  </div>
+  <a href="{% url 'skill_add' %}" class="btn btn-neon">+ Add Skill</a>
+</div>
+<div class="data-table-wrap">
+  <table class="data-table">
+    <thead><tr><th>Name</th><th>Category</th><th>Proficiency</th><th>Order</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for s in skills %}
+      <tr>
+        <td><strong>{{ s.name }}</strong></td>
+        <td style="color:var(--neon);font-family:var(--font-mono);font-size:.75rem">{{ s.get_category_display }}</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:.75rem">
+            <div style="width:80px;height:3px;background:rgba(255,255,255,.06)">
+              <div style="width:{{ s.proficiency }}%;height:100%;background:var(--neon)"></div>
+            </div>
+            <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--neon)">{{ s.proficiency }}%</span>
+          </div>
+        </td>
+        <td style="color:var(--muted)">{{ s.order }}</td>
+        <td>
+          <a href="{% url 'skill_edit' s.pk %}" class="btn btn-ghost" style="padding:.4rem .8rem;font-size:.65rem">Edit</a>
+          <a href="{% url 'skill_delete' s.pk %}" class="btn btn-danger" style="padding:.4rem .8rem;font-size:.65rem">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" style="color:var(--muted);text-align:center;padding:2rem">No skills yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

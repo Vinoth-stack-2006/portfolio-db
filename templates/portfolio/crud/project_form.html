@@ -1,0 +1,33 @@
+{% extends 'portfolio/dashboard_base.html' %}
+{% block title %}{{ action }} Project{% endblock %}
+{% block nav_projects %}active{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div class="breadcrumb"><a href="{% url 'dashboard' %}">Dashboard</a> → <a href="{% url 'project_list' %}">Projects</a> → {{ action }}</div>
+  <h1 class="page-title">{{ action }} Project</h1>
+</div>
+<div class="form-card">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-section-title">// Project Details</div>
+    <div class="form-grid">
+      <div class="form-group full"><label class="form-label">Title</label>{{ form.title }}</div>
+      <div class="form-group full"><label class="form-label">Short Description</label>{{ form.description }}</div>
+      <div class="form-group full"><label class="form-label">Long Description</label>{{ form.long_description }}</div>
+      <div class="form-group full"><label class="form-label">Tech Stack (comma separated)</label>{{ form.tech_stack }}</div>
+      <div class="form-group"><label class="form-label">GitHub URL</label>{{ form.github_url }}</div>
+      <div class="form-group"><label class="form-label">Live URL</label>{{ form.live_url }}</div>
+      <div class="form-group"><label class="form-label">Status</label>{{ form.status }}</div>
+      <div class="form-group"><label class="form-label">Order</label>{{ form.order }}</div>
+      <div class="form-group"><label class="form-label">Project Image</label>{{ form.image }}</div>
+      <div class="form-group" style="display:flex;align-items:center;gap:.75rem;padding-top:1.5rem">
+        {{ form.featured }} <label class="form-label" style="margin:0">Featured Project</label>
+      </div>
+    </div>
+    <div style="margin-top:2rem;display:flex;gap:1rem">
+      <button type="submit" class="btn btn-neon">Save Project</button>
+      <a href="{% url 'project_list' %}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

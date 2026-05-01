@@ -1,0 +1,33 @@
+{% extends 'portfolio/dashboard_base.html' %}
+{% block title %}Experience{% endblock %}
+{% block nav_experience %}active{% endblock %}
+{% block content %}
+<div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start">
+  <div>
+    <div class="breadcrumb"><a href="{% url 'dashboard' %}">Dashboard</a> → Experience</div>
+    <h1 class="page-title">Experience</h1>
+  </div>
+  <a href="{% url 'experience_add' %}" class="btn btn-neon">+ Add Experience</a>
+</div>
+<div class="data-table-wrap">
+  <table class="data-table">
+    <thead><tr><th>Role</th><th>Company</th><th>Period</th><th>Current</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for e in experiences %}
+      <tr>
+        <td><strong>{{ e.role }}</strong></td>
+        <td style="color:var(--neon2)">{{ e.company }}</td>
+        <td style="font-family:var(--font-mono);font-size:.75rem;color:var(--muted)">{{ e.start_date|date:"M Y" }} — {% if e.is_current %}Present{% else %}{{ e.end_date|date:"M Y" }}{% endif %}</td>
+        <td>{% if e.is_current %}<span style="color:var(--neon)">Yes</span>{% else %}<span style="color:var(--muted)">No</span>{% endif %}</td>
+        <td>
+          <a href="{% url 'experience_edit' e.pk %}" class="btn btn-ghost" style="padding:.4rem .8rem;font-size:.65rem">Edit</a>
+          <a href="{% url 'experience_delete' e.pk %}" class="btn btn-danger" style="padding:.4rem .8rem;font-size:.65rem">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" style="color:var(--muted);text-align:center;padding:2rem">No experience added yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
